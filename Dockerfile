@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Копируем исходный код
 COPY . .
 # Указываем точку входа
-CMD ["python", "xray_config_generator.py"]
+CMD ["python", "main.py"]

@@ -24,9 +24,16 @@ Docker образ надо предварительно собрать
 - При запуске монтируем конфигурационный файл xray, чтобы скрипт мог его обновить.
 - И монтируем пока еще несуществующий файл users, в который будут выгружены строки для настройки клиентских подключений.
 ```
-docker run users-sync --image xray-sync --rm \
---env-file settings.env \
--v ./config.json:/usr/local/etc/xray/config.json \
--v ./users:/usr/local/etc/xray/users \
--v ./template.j2:/usr/local/etc/xray/template.j2
+touch users
+touch config.json
+touch template.j2
+```
+
+```
+docker run \
+-v /usr/local/etc/xray/config.json:/app/config.json \
+-v /usr/local/etc/xray/users:/app/users \
+-v /usr/local/etc/xray/template.j2:/app/template.j2 \
+--env-file .env \
+-it --rm sudoroot/xray-keycloak:v0.0.1
 ```
