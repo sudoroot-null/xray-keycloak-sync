@@ -54,7 +54,7 @@ def generate_vless_urls(xray_config: Dict, server_name: str) -> List[str]:
             if reality_settings:
                 params.update({
                     'sni': reality_settings.get('serverNames', [''])[0],
-                    'pbk': reality_settings.get('publicKey'),
+                    'pbk': reality_settings.get('password'),
                     'sid': reality_settings.get('shortIds', [''])[0],
                     'fp': reality_settings.get('fingerprint', 'chrome')
                 })

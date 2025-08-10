@@ -4,6 +4,7 @@
       "port": 443,
       "protocol": "vless",
       "settings": {
+        "decryption": "none",
         "clients": [
           {% for user in full_access_users %}
           {
@@ -29,6 +30,7 @@
           "dest": "example.com:443",
           "serverNames": ["example.com"],
           "privateKey": "your-private-key",
+          "password": "your-puclic-key",
           "shortIds": ["your-short-id"]
         }
       }
