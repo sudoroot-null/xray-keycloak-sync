@@ -1,4 +1,13 @@
 {
+  "log": {
+    "loglevel": "warning",
+    "dnsLog": true
+  },
+  "dns": {
+    "servers": [
+      "8.8.8.8"
+    ]
+  },
   "inbounds": [
     {
       "port": 443,
@@ -30,7 +39,7 @@
           "dest": "example.com:443",
           "serverNames": ["example.com"],
           "privateKey": "your-private-key",
-          "password": "your-puclic-key",
+          "password": "your-public-key",
           "shortIds": ["your-short-id"]
         }
       }
@@ -39,6 +48,9 @@
   "outbounds": [
     {
       "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "UseIP"
+      },
       "tag": "direct"
     },
     {
@@ -58,11 +70,21 @@
           "192.168.0.0/16",
           "fc00::/7"
         ],
-        "users": [
+        "user": [
           {% for user in restricted_users %}
-          "{{ user.uuid }}"{% if not loop.last %},{% endif %}
+          "{{ user.email }}"{% if not loop.last %},{% endif %}
           {% endfor %}
         ]
+      },
+      {
+        "type": "field",
+        "user": [
+          {% for user in restricted_users %}
+          "{{ user.email }}"{% if not loop.last %},{% endif %}
+          {% endfor %}
+        ],
+        "domain": ["example.com"],
+        "outboundTag": "blocked"
       },
       {% endif %}
       {
